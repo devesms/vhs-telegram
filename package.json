@@ -6,16 +6,19 @@
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "start": "wrangler dev",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "compiler": "npx tsc"
   },
   "dependencies": {
+    "@cloudflare/d1": "^1.4.1",
     "@libsql/client": "^0.14.0",
     "chanfana": "^2.0.2",
     "hono": "^4.4.7",
+    "sqlite3": "^5.1.7",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240919.0",
+    "@cloudflare/workers-types": "^4.20241218.0",
     "@types/node": "20.8.3",
     "@types/service-worker-mock": "^2.0.1",
     "wrangler": "^3.60.3"

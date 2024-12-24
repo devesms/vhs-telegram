@@ -1,7 +1,7 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "vhs-telegram"
 main = "src/index.ts"
-compatibility_date = "2024-09-19"
+compatibility_date = "2024-12-24"
 
 # Whether Wrangler should send usage metrics to Cloudflare for this project.
 # - to disable sending metrics for a project: `send_metrics = false`
@@ -76,6 +76,10 @@ binding = "AI" # available in your Worker code on `env.AI`
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
 # id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+[[env.production.kv_namespaces]]
+binding = "D1"
+id = "af16a92a-473e-41f1-aa62-15266a09b04e"  # Thay thế bằng ID của cơ sở dữ liệu D1 bạn tạo trên Cloudflare
 
 # Bind an mTLS certificate. Use to present a client certificate when communicating with another service.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#mtls-certificates

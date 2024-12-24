@@ -1,6 +1,18 @@
 import { Bool, Num, OpenAPIRoute } from "chanfana";
 import { z } from "zod";
-import { Task } from "../types";
+import { CloudflareD1, TelegramBotInfo } from "types";
+
+const db = CloudflareD1.database("d1-quynh");
+
+async function getBotTelegram(): Promise<any> {
+  try {
+    const result = await db.prepare("SELECT * FROM bot_telegram").all();
+    return result;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return { error: "Error fetching data" };
+  }
+}
 
 export class TelegramList extends OpenAPIRoute {
   schema = {
@@ -23,14 +35,7 @@ export class TelegramList extends OpenAPIRoute {
         description: "Returns a list of tasks",
         content: {
           "application/json": {
-            schema: z.object({
-              series: z.object({
-                success: Bool(),
-                result: z.object({
-                  tasks: Task.array(),
-                }),
-              }),
-            }),
+            schema: TelegramBotInfo,
           },
         },
       },
@@ -40,6 +45,7 @@ export class TelegramList extends OpenAPIRoute {
   async handle(request: any, env: any) {
     // Get validated data
     const data = await this.getValidatedData<typeof this.schema>();
+    const botTelegram = await getBotTelegram();
 
     // Retrieve the validated parameters
     const { page, isCompleted } = data.query;
@@ -48,22 +54,7 @@ export class TelegramList extends OpenAPIRoute {
 
     return {
       success: true,
-      tasks: [
-        {
-          name: "Clean my room",
-          slug: "clean-room",
-          description: null,
-          completed: false,
-          due_date: "2025-01-05",
-        },
-        {
-          name: "Build something awesome with Cloudflare Workers",
-          slug: "cloudflare-workers",
-          description: "Lorem Ipsum",
-          completed: true,
-          due_date: "2022-12-24",
-        },
-      ],
+      botTelegram: botTelegram,
     };
   }
 }
