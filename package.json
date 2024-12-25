@@ -5,9 +5,9 @@
   "scripts": {
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
+    "dev:tsc": "npx tsc --watch",
     "start": "wrangler dev",
-    "cf-typegen": "wrangler types",
-    "compiler": "npx tsc"
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "@cloudflare/d1": "^1.4.1",
